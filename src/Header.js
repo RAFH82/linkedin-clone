@@ -10,6 +10,9 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
+// Avatar IMG
+import avatar from "./imgs/IMG_20200906_155216_621.jpg";
+
 function Header() {
 	return (
 		<div className="header">
@@ -29,6 +32,7 @@ function Header() {
 				<HeaderOption Icon={BusinessCenterIcon} title="Jobs" />
 				<HeaderOption Icon={ChatIcon} title="Messaging" />
 				<HeaderOption Icon={NotificationsIcon} title="Notifications" />
+				<HeaderOption avatar={avatar} title="RAFH82" />
 			</div>
 		</div>
 	);
