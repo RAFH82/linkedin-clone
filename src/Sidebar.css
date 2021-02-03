@@ -77,4 +77,17 @@
 
 .sidebar__recentItem {
 	display: flex;
+	font-size: 13px;
+	color: grey;
+	font-weight: bolder;
+	cursor: pointer;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+.sidebar__recentItem:hover {
+	background-color: whitesmoke;
+	border-radius: 10px;
+	cursor: pointer;
+	color: black;
 }
