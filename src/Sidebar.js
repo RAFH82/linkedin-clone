@@ -4,6 +4,9 @@ import "./Sidebar.css";
 // Avatar Background
 import avatarBackground from "./imgs/04180_grandtetonsunset_3360x2100.jpg";
 
+// Avatar IMG
+import avatar from "./imgs/IMG_20200906_155216_621.jpg";
+
 // Material UI
 import { Avatar } from "@material-ui/core";
 
@@ -18,7 +21,7 @@ function Sidebar() {
 		<div className="sidebar">
 			<div className="sidebar__top">
 				<img src={avatarBackground} alt="avatar background" />
-				<Avatar className="sidebar__avatar" />
+				<Avatar className="sidebar__avatar" src={avatar} />
 				<h2>Ryan Hrechka</h2>
 				<h4>r.hrechka@gmail.com</h4>
 			</div>
