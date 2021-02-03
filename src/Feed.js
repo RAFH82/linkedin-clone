@@ -1,5 +1,8 @@
 import React from "react";
+import Post from "./Post";
 import "./Feed.css";
+
+// Material UI
 import CreateIcon from "@material-ui/icons/Create";
 import ImageIcon from "@material-ui/icons/Image";
 import InputOption from "./InputOption";
@@ -33,6 +36,13 @@ function Feed() {
 					/>
 				</div>
 			</div>
+			<Post
+				name="Ryan Hrechka"
+				description="testing posts"
+				message="Lorem ipsum garbage...blah blah"
+				photoUrl=""
+			/>
+			{/* POSTS */}
 		</div>
 	);
 }
