@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import "./Feed.css";
+import { db } from "./firebase";
+import firebase from "firebase";
 
 // Material UI
 import CreateIcon from "@material-ui/icons/Create";
@@ -11,10 +13,32 @@ import EventNoteIcon from "@material-ui/icons/EventNote";
 import CalendarViewDayIcon from "@material-ui/icons/CalendarViewDay";
 
 function Feed() {
+	const [input, setInput] = useState("");
 	const [posts, setPosts] = useState([]);
 
-	const sendPost = (e) => {
-		e.preventDefault();
+	useEffect(() => {
+		db.collection("posts").onSnapshot((snapshot) =>
+			setPosts(
+				snapshot.docs.map((doc) => ({
+					id: doc.id,
+					data: doc.data(),
+				}))
+			)
+		);
+	}, []);
+
+	const sendPost = (event) => {
+		event.preventDefault();
+
+		db.collection("posts").add({
+			name: "Ryan Hrechka",
+			description: "test",
+			message: input,
+			photoUrl: "",
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+		});
+
+		setInput("");
 	};
 
 	return (
@@ -27,10 +51,10 @@ function Feed() {
 							className="input__field"
 							type="text"
 							placeholder="Start a post"
+							value={input}
+							onChange={(event) => setInput(event.target.value)}
 						/>
-						<button onClick={sendPost} type="submit">
-							Send
-						</button>
+						<button onClick={sendPost} type="submit"></button>
 					</form>
 				</div>
 				<div className="feed__inputOptions">
@@ -44,15 +68,15 @@ function Feed() {
 					/>
 				</div>
 			</div>
-			{posts.map((post) => (
-				<Post />
+			{posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+				<Post
+					key={id}
+					name={name}
+					description={description}
+					message={message}
+					photoUrl={photoUrl}
+				/>
 			))}
-			<Post
-				name="Ryan Hrechka"
-				description="testing posts"
-				message="Lorem ipsum garbage...blah blah"
-				photoUrl=""
-			/>
 		</div>
 	);
 }
