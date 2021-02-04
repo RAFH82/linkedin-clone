@@ -1,29 +1,29 @@
 import React from "react";
 import "./Sidebar.css";
-
-// Avatar Background
 import avatarBackground from "./imgs/04180_grandtetonsunset_3360x2100.jpg";
-
-// Avatar IMG
-import avatar from "./imgs/IMG_20200906_155216_621.jpg";
-
-// Material UI
 import { Avatar } from "@material-ui/core";
+import { selectUser } from "./features/userSlice";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
+	const user = useSelector(selectUser);
+
 	const recentItem = (topic) => (
 		<div className="sidebar__recentItem">
 			<span className="sidebar__hash">#</span>
 			<p>{topic}</p>
 		</div>
 	);
+
 	return (
 		<div className="sidebar">
 			<div className="sidebar__top">
 				<img src={avatarBackground} alt="avatar background" />
-				<Avatar className="sidebar__avatar" src={avatar} />
-				<h2>Ryan Hrechka</h2>
-				<h4>r.hrechka@gmail.com</h4>
+				<Avatar className="sidebar__avatar" src={user.photoUrl}>
+					{user.email[0]}
+				</Avatar>
+				<h2>{user.displayName}</h2>
+				<h4>{user.email}</h4>
 			</div>
 			<div className="sidebar__stats">
 				<div className="sidebar__stat">

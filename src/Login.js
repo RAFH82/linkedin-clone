@@ -1,11 +1,71 @@
-import React from "react";
-import { auth } from "firebase";
+import React, { useState } from "react";
+import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
+import { login } from "./features/userSlice";
+
 import "./Login.css";
 
 function Login() {
-	const loginToApp = () => {};
+	const [name, setName] = useState("");
+	const [profilePic, setProfilePic] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const dispatch = useDispatch();
 
-	const register = () => {};
+	const loginToApp = (event) => {
+		event.preventDefault();
+
+		auth
+			.signInWithEmailAndPassword(email, password)
+			.then((userAuth) => {
+				dispatch(
+					login({
+						email: userAuth.user.email,
+						ui: userAuth.user.uid,
+						displayName: userAuth.user.displayName,
+						photoUrl: userAuth.user.photoUrl,
+					})
+				);
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+
+	const register = () => {
+		if (!name) {
+			return alert("Please enter a full name");
+		}
+
+		if (!email) {
+			return alert("Email required");
+		}
+
+		auth
+			.createUserWithEmailAndPassword(email, password)
+			.then((userAuth) => {
+				// update the user
+				userAuth.user
+					.updateProfile({
+						displayName: name,
+						photoUrl: profilePic,
+					})
+					// update the redux data layer with the user data
+					.then(() => {
+						dispatch(
+							login({
+								email: userAuth.user.email,
+								uid: userAuth.user.uid,
+								displayName: name,
+								photoUrl: profilePic,
+							})
+						);
+					});
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
 
 	return (
 		<div className="login">
@@ -15,10 +75,30 @@ function Login() {
 			/>
 
 			<form>
-				<input placeholder="Full name (required if registering)" type="text" />
-				<input placeholder="Profile pic URL (otional)" type="text" />
-				<input placeholder="email" type="email" />
-				<input placeholder="password" type="password" />
+				<input
+					value={name}
+					onChange={(event) => setName(event.target.value)}
+					placeholder="Full name (required if registering)"
+					type="text"
+				/>
+				<input
+					value={profilePic}
+					onChange={(event) => setProfilePic(event.target.value)}
+					placeholder="Profile pic URL (otional)"
+					type="text"
+				/>
+				<input
+					value={email}
+					onChange={(event) => setEmail(event.target.value)}
+					placeholder="email"
+					type="email"
+				/>
+				<input
+					value={password}
+					onChange={(event) => setPassword(event.target.value)}
+					placeholder="password"
+					type="password"
+				/>
 				<button type="submit" onClick={loginToApp}>
 					Sign In
 				</button>

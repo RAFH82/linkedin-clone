@@ -14,10 +14,10 @@ const useStyles = makeStyles({
 	},
 });
 
-function HeaderOption({ avatar, Icon, title }) {
+function HeaderOption({ avatar, Icon, title, onClick }) {
 	const classes = useStyles();
 	return (
-		<div className="headerOption">
+		<div onClick={onClick} className="headerOption">
 			{Icon && <Icon className={classes.headerOption__icon} />}
 			{avatar && <Avatar className={classes.headerOption__icon} src={avatar} />}
 			<h3 className="headerOption__title">{title}</h3>
