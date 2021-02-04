@@ -5,6 +5,7 @@ import Header from "./Header.js";
 import Sidebar from "./Sidebar";
 import Feed from "./Feed";
 import Login from "./Login";
+import Widgets from "./Widgets";
 
 import "./App.css";
 
@@ -45,7 +46,7 @@ function App() {
 				<div className="app__body">
 					<Sidebar />
 					<Feed />
-					{/* widgets */}
+					<Widgets />
 				</div>
 			)}
 		</div>
