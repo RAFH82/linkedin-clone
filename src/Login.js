@@ -7,7 +7,7 @@ import "./Login.css";
 
 function Login() {
 	const [name, setName] = useState("");
-	const [profilePic, setProfilePic] = useState("");
+	const [photoURL, setPhotoURL] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function Login() {
 						email: userAuth.user.email,
 						ui: userAuth.user.uid,
 						displayName: userAuth.user.displayName,
-						photoUrl: userAuth.user.photoUrl,
+						photoURL: userAuth.user.photoURL,
 					})
 				);
 			})
@@ -48,7 +48,7 @@ function Login() {
 				userAuth.user
 					.updateProfile({
 						displayName: name,
-						photoUrl: profilePic,
+						photoURL: photoURL,
 					})
 					// update the redux data layer with the user data
 					.then(() => {
@@ -57,7 +57,7 @@ function Login() {
 								email: userAuth.user.email,
 								uid: userAuth.user.uid,
 								displayName: name,
-								photoUrl: profilePic,
+								photoURL: photoURL,
 							})
 						);
 					});
@@ -82,8 +82,8 @@ function Login() {
 					type="text"
 				/>
 				<input
-					value={profilePic}
-					onChange={(event) => setProfilePic(event.target.value)}
+					value={photoURL}
+					onChange={(event) => setPhotoURL(event.target.value)}
 					placeholder="Profile pic URL (otional)"
 					type="text"
 				/>

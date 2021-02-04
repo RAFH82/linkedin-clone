@@ -3,6 +3,8 @@ import Post from "./Post";
 import "./Feed.css";
 import { db } from "./firebase";
 import firebase from "firebase";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
 
 // Material UI
 import CreateIcon from "@material-ui/icons/Create";
@@ -13,6 +15,7 @@ import EventNoteIcon from "@material-ui/icons/EventNote";
 import CalendarViewDayIcon from "@material-ui/icons/CalendarViewDay";
 
 function Feed() {
+	const user = useSelector(selectUser);
 	const [input, setInput] = useState("");
 	const [posts, setPosts] = useState([]);
 
@@ -33,10 +36,10 @@ function Feed() {
 		event.preventDefault();
 
 		db.collection("posts").add({
-			name: "Ryan Hrechka",
-			description: "test",
+			name: user.displayName,
+			description: user.email,
 			message: input,
-			photoUrl: "",
+			photoURL: user.photoURL,
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		});
 
@@ -70,13 +73,13 @@ function Feed() {
 					/>
 				</div>
 			</div>
-			{posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+			{posts.map(({ id, data: { name, description, message, photoURL } }) => (
 				<Post
 					key={id}
 					name={name}
 					description={description}
 					message={message}
-					photoUrl={photoUrl}
+					photoURL={photoURL}
 				/>
 			))}
 		</div>
