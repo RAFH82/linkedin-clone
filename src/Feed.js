@@ -39,7 +39,7 @@ function Feed() {
 			name: user.displayName,
 			description: user.email,
 			message: input,
-			photoURL: user.photoURL,
+			photoURL: user.photoURL || "",
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		});
 
